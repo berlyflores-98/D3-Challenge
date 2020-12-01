@@ -38,10 +38,6 @@ d3.csv("assets/data/data.csv").then(function(data) {
 
     console.log(data.poverty);
 
-//     data.forEach(function(stateData) {
-//         stateData.poverty = +stateData.poverty;
-//         stateData.healthcare = +stateData.healthcare;
-//   });
 
   // Step 2: Create scale functions
     // ==============================
@@ -104,17 +100,15 @@ d3.csv("assets/data/data.csv").then(function(data) {
     //Add the SVG Text Element to the group
     var circlesLabel = chartGroup.selectAll("circles");
 
-    //Add SVG Text Element Attributes
     circlesLabel
     .data(data)
     .enter()
     .append("text")
-    .classed("stateText", true)
     .attr("text-anchor", "middle")
-    .attr("x", d => xScale(d.poverty))
-    .attr("y", d => yScale(d.healthcare))
+    .attr("x", d => xLinearScale(d.poverty))
+    .attr("y", d => yLinearScale(d.healthcare))
     .text(d => `${d.abbr}`)
-    .attr("font-size", `${circleRadius}px`);
+    .attr("font-size", 9);
 
 
   });
