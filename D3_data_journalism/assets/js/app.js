@@ -72,7 +72,6 @@ d3.csv("assets/data/data.csv").then(function(data) {
     .attr("cx", d => xLinearScale(d.poverty))
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", 10)
-    .attr("fill", "teal")
     .attr("opacity", ".75")
     .classed("stateCircle", true);
 
