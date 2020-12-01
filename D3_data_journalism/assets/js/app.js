@@ -89,8 +89,9 @@ d3.csv("assets/data/data.csv").then(function(data) {
   chartGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left)
-    .attr("x", 0 - (chartHeight / 2))
+    .attr("x", 0 - ((chartHeight/2)))
     .attr("dy", "1em")
+    .attr("text-anchor", "middle")
     .classed("axis-text", true)
     .text("Lacks HealthCare (%)");
 
@@ -110,5 +111,24 @@ d3.csv("assets/data/data.csv").then(function(data) {
     .text(d => `${d.abbr}`)
     .attr("font-size", 9);
 
+    // Step 1: Initialize Tooltip
+    var toolTip = d3.tip()
+    .attr("class", "d3-tip") //toolTip doesn't have a "classed()" function like core d3 uses to add classes, so we use the attr() method.
+    .offset([0, 50]) // (vertical, horizontal)
+    .html(function(d) {
+        return (`<strong>${(d.state)}</strong><br/>Poverty ${(d.poverty)}%<br/>Lacks Healthcare ${d.healthcare}%`);
+    });
+
+    // Step 2: Create the tooltip in chartGroup.
+    chartGroup.call(toolTip);
+
+    // Step 3: Create "mouseover" event listener to display tooltip
+    circlesGroup.on("mouseover", function(d) {
+      toolTip.show(d, this);
+    })
+    // Step 4: Create "mouseout" event listener to hide tooltip
+      .on("mouseout", function(d) {
+        toolTip.hide(d);
+      });
 
   });
